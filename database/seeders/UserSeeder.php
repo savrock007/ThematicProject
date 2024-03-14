@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->count(10)->create();
         DB::table('users')->insert([
             [
                 'name' => 'Alexander',
