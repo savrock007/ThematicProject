@@ -5,6 +5,11 @@ import VulnCard from "@/Components/VulnCard.jsx";
 
 export default function VulnList({auth, vulns}) {
 
+    vulns = Object.values(vulns)[0];
+
+    console.log(vulns);
+
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="VulnList"/>

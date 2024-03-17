@@ -9,7 +9,7 @@ export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-[#1E1E1E]">
             <nav className="bg-[#2B2A2A]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -119,7 +119,7 @@ export default function Authenticated({ user, header, children }) {
                 </header>
             )}
 
-            <main className="bg-[#1E1E1E]"> {children}</main>
+            <main className=""> {children}</main>
         </div>
     );
 }

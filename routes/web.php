@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/vulns',[VulnerabilityController::class,'list'])->name('vuln.list');
+    Route::get('/vulns/{id}',[VulnerabilityController::class,'details'])->name('vuln.details');
 });
 
 require __DIR__.'/auth.php';

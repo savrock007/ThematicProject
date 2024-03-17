@@ -19,8 +19,17 @@ class Ticket extends Model
     }
 
 
-    public function comment(){
+    public function comments(){
         return $this->hasMany(Comment::class);
+    }
+
+
+    public function severity(){
+        return $this->belongsTo(Severity::class);
+    }
+
+    public function developer(){
+        return $this->belongsTo(User::class);
     }
 
 }

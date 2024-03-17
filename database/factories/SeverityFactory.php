@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 
-class CommentFactory extends Factory
+class SeverityFactory extends Factory
 {
     /**
      * The current password being used by the factory.
@@ -20,8 +20,8 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'content' => fake()->paragraph(),
-            'author_id' => random_int(1,10),
+            'title' => fake()->sentence(),
+            'color' => fake()->hexColor(),
         ];
     }
 
