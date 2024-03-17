@@ -7,9 +7,8 @@ export default function VulnCard({vuln}) {
                     <p className="text-[#949494]">{vuln.severity?.title} severity</p>
 
                 </div>
-                <p className="text-white text-lg">{vuln.description}</p>
                 <div className="description">
-
+                    <p className="text-white text-lg">{vuln.description}</p>
                 </div>
                 <div className="badges flex flex-col gap-4">
                     <div className="severity_badge w-fit text-white bg-[#FF0000] rounded-2xl px-4 py-1">

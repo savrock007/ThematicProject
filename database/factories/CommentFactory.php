@@ -21,6 +21,7 @@ class CommentFactory extends Factory
     {
         return [
             'content' => fake()->paragraph(),
+            'author_id' => random_int(1,10),
         ];
     }
 
