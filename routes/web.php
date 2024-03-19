@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VulnerabilityController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,7 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/vulns',[VulnerabilityController::class,'list'])->name('vuln.list');
+
+    Route::get('/vulns/create',[VulnerabilityController::class,"createPage"]);
+    Route::post('/vulns/create', [VulnerabilityController::class,'createTicket']);
+
     Route::get('/vulns/{id}',[VulnerabilityController::class,'details'])->name('vuln.details');
+
 });
 
 require __DIR__.'/auth.php';

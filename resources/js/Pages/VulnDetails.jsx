@@ -69,8 +69,15 @@ export default function VulnDetails({auth, vuln}) {
                         </div>
                         <div className="dev_assigned w-full flex flex-col items-center">
                             <p className="w-fit text-white text-xl">Developer assigned: </p>
-                            <p className="w-fit text-[#7B15FD] text-lg">{vuln.developer?.name}</p>
+                            <p className="w-fit text-[#7B15FD] text-lg">{vuln.developer?.name}{vuln.developer?.id === auth.user.id ? " (You)" : ''}</p>
                         </div>
+                        {vuln.tester &&
+                        <div className="dev_assigned w-full flex flex-col items-center">
+                            <p className="w-fit text-white text-xl">Tester assigned: </p>
+                            <p className="w-fit text-[#7B15FD] text-lg">{vuln.tester?.name} {vuln.tester?.id === auth.user.id ? " (You)" : ''}</p>
+                        </div>
+                        }
+
 
                         <div className="status element flex flex-col gap-3">
                             <div className="bar flex flex-row justify-center">
@@ -93,10 +100,6 @@ export default function VulnDetails({auth, vuln}) {
                             </div>
                         </div>
 
-
-                        <a href={`/vulns/${vuln.id}`} className="py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit">View
-                            Details</a>
-
                     </div>
 
                 </div>
@@ -105,7 +108,7 @@ export default function VulnDetails({auth, vuln}) {
                     {
                         vuln.comments.map((comment) =>
                             (
-                                <Comment comment={comment} type={comment.author.id === auth.user.id ? 1 : 0}/>
+                                <Comment key={comment.id} comment={comment} type={comment.author.id === auth.user.id ? 1 : 0}/>
                             )
                         )
 

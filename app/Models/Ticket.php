@@ -9,6 +9,8 @@ class Ticket extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
 
     public function autor(){
         return $this->belongsTo(User::class,'author_id','id');
@@ -29,6 +31,9 @@ class Ticket extends Model
     }
 
     public function developer(){
+        return $this->belongsTo(User::class);
+    }
+    public function tester(){
         return $this->belongsTo(User::class);
     }
 
