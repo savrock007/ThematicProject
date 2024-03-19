@@ -22,6 +22,7 @@ class TicketResource extends JsonResource
             'created_at' => $this->created_at->format('d-m-Y H:i'),
             'comments' => CommentResource::collection($this->comments),
             'developer' => new UserResource($this->developer),
+            'tester' => new UserResource($this->tester),
             'severity' =>  new SeverityResource($this->severity),
         ];
     }

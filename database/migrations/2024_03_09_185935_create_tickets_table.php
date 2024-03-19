@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
+            $table->text('steps')->nullable();
+            $table->text('assets')->nullable();
             $table->integer('developer_id')->nullable();
+            $table->integer('tester_id')->nullable();
             $table->integer('status_id')->nullable();
             $table->integer('severity_id')->nullable();
             $table->timestamps();
