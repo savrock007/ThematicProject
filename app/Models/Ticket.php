@@ -30,6 +30,10 @@ class Ticket extends Model
         return $this->belongsTo(Severity::class);
     }
 
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
+
     public function developer(){
         return $this->belongsTo(User::class);
     }

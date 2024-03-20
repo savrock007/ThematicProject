@@ -1,4 +1,4 @@
-import {Head} from "@inertiajs/react";
+import {Head, router} from "@inertiajs/react";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {FaArrowLeft} from "react-icons/fa";
 import {useState} from "react";
@@ -72,32 +72,40 @@ export default function VulnDetails({auth, vuln}) {
                             <p className="w-fit text-[#7B15FD] text-lg">{vuln.developer?.name}{vuln.developer?.id === auth.user.id ? " (You)" : ''}</p>
                         </div>
                         {vuln.tester &&
-                        <div className="dev_assigned w-full flex flex-col items-center">
-                            <p className="w-fit text-white text-xl">Tester assigned: </p>
-                            <p className="w-fit text-[#7B15FD] text-lg">{vuln.tester?.name} {vuln.tester?.id === auth.user.id ? " (You)" : ''}</p>
-                        </div>
+                            <div className="dev_assigned w-full flex flex-col items-center">
+                                <p className="w-fit text-white text-xl">Tester assigned: </p>
+                                <p className="w-fit text-[#7B15FD] text-lg">{vuln.tester?.name} {vuln.tester?.id === auth.user.id ? " (You)" : ''}</p>
+                            </div>
                         }
 
 
                         <div className="status element flex flex-col gap-3">
                             <div className="bar flex flex-row justify-center">
-                                <div
-                                    style={(vuln.status?.id > 0) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                                    className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-                                <div
-                                    style={(vuln.status?.id > 1) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                                    className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-                                <div
-                                    style={(vuln.status?.id > 2) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                                    className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-                                <div
-                                    style={(vuln.status?.id > 3) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                                    className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-
+                                {Array(4).fill().map((_, index) => (
+                                    <div
+                                        key={index}
+                                        style={{
+                                            backgroundColor: (vuln.status?.id > index) ? ['red', 'yellow', 'blue', 'green'][index] : "transparent"
+                                        }}
+                                        className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full">
+                                    </div>
+                                ))}
                             </div>
                             <div className="flex justify-center">
                                 <p className="text-white">Status: {vuln.status?.title ?? 'NaN'}</p>
                             </div>
+                            {auth.user.role !== 'admin' &&
+                                <div>
+                                    <a onClick={() => {
+                                        router.post(`/vulns/${vuln.id}/changeStatus/2`)
+                                    }} className="py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit">I'm working on
+                                        it!</a>
+                                    <a onClick={() => {
+                                        router.post(`/vulns/${vuln.id}/changeStatus/3`)
+                                    }} className="py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit">Send to
+                                        testing</a>
+                                </div>
+                            }
                         </div>
 
                     </div>
@@ -108,7 +116,8 @@ export default function VulnDetails({auth, vuln}) {
                     {
                         vuln.comments.map((comment) =>
                             (
-                                <Comment key={comment.id} comment={comment} type={comment.author.id === auth.user.id ? 1 : 0}/>
+                                <Comment key={comment.id} comment={comment}
+                                         type={comment.author.id === auth.user.id ? 1 : 0}/>
                             )
                         )
 
