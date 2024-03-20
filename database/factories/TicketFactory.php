@@ -23,6 +23,7 @@ class TicketFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
+            'status_id' => '1',
             'description' => fake()->paragraph(),
 
         ];

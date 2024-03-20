@@ -30,16 +30,15 @@ export default function VulnCard({vuln}) {
 
                 <div className="status element flex flex-col gap-3">
                     <div className="bar flex flex-row justify-center">
-                        <div
-                            style={(vuln.status?.id > 0) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                            className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-                        <div
-                            style={(vuln.status?.id > 0) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                            className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-                        <div
-                            style={(vuln.status?.id > 0) ? {backgroundColor: "white"} : {backgroundColor: "transparent"}}
-                            className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full"></div>
-
+                        {Array(4).fill().map((_, index) => (
+                            <div
+                                key={index}
+                                style={{
+                                    backgroundColor: (vuln.status?.id > index) ? ['red', 'yellow', 'blue', 'green'][index] : "transparent"
+                                }}
+                                className="sub_bar border border-[#909090] w-[60px] h-[15px] rounded-full">
+                            </div>
+                        ))}
                     </div>
                     <div className="flex justify-center">
                         <p className="text-white">Status: {vuln.status?.title ?? 'NaN'}</p>

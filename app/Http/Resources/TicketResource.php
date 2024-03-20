@@ -23,6 +23,10 @@ class TicketResource extends JsonResource
             'comments' => CommentResource::collection($this->comments),
             'developer' => new UserResource($this->developer),
             'tester' => new UserResource($this->tester),
+            'status' =>  [
+                'id' => $this->status->id,
+                'title'=> $this->status->title,
+            ],
             'severity' =>  new SeverityResource($this->severity),
         ];
     }
