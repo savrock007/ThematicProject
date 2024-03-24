@@ -7,8 +7,21 @@ import Comment from "@/Components/Comment";
 
 export default function VulnDetails({auth, vuln}) {
     const [tab, setTab] = useState('overview');
+
+    const [comment, setComment] = useState("");
     vuln = Object.values(vuln)[0];
-    const linear = 'linear-gradient(to right, #2B2A2A 0%, #A7A7A7 50%, #2B2A2A 100%) 10 / 1 / 1 stretch'
+
+
+
+    const linear = 'linear-gradient(to right, #2B2A2A 0%, #A7A7A7 50%, #2B2A2A 100%) 10 / 1 / 1 stretch';
+
+    function submitComment(){
+        const data = {
+            comment:comment
+        }
+        router.post(`/vulns/${vuln.id}/postComment`,data);
+    }
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="VulnDetails"/>
@@ -71,12 +84,11 @@ export default function VulnDetails({auth, vuln}) {
                             <p className="w-fit text-white text-xl">Developer assigned: </p>
                             <p className="w-fit text-[#7B15FD] text-lg">{vuln.developer?.name}{vuln.developer?.id === auth.user.id ? " (You)" : ''}</p>
                         </div>
-                        {vuln.tester &&
-                            <div className="dev_assigned w-full flex flex-col items-center">
-                                <p className="w-fit text-white text-xl">Tester assigned: </p>
-                                <p className="w-fit text-[#7B15FD] text-lg">{vuln.tester?.name} {vuln.tester?.id === auth.user.id ? " (You)" : ''}</p>
-                            </div>
-                        }
+                        <div className="dev_assigned w-full flex flex-col items-center">
+                            <p className="w-fit text-white text-xl">Tester assigned: </p>
+                            <p className="w-fit text-[#7B15FD] text-lg">{vuln.tester?.name ?? "None"} {vuln.tester?.id === auth.user.id ? " (You)" : ''}</p>
+                        </div>
+
 
 
                         <div className="status element flex flex-col gap-3">
@@ -98,12 +110,17 @@ export default function VulnDetails({auth, vuln}) {
                                 <div>
                                     <a onClick={() => {
                                         router.post(`/vulns/${vuln.id}/changeStatus/2`)
-                                    }} className="py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit">I'm working on
+                                    }} className={`py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit ${vuln.status.id === 1 ? "" : "hidden" }`}>I'm working on
                                         it!</a>
                                     <a onClick={() => {
                                         router.post(`/vulns/${vuln.id}/changeStatus/3`)
-                                    }} className="py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit">Send to
+                                    }} className={`py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit ${vuln.status.id === 2 ? "" : "hidden"}`}>Send to
                                         testing</a>
+
+                                    <a onClick={() => {
+                                        router.post(`/vulns/${vuln.id}/changeStatus/4`)
+                                    }} className={`py-2 px-10 text-white rounded-3xl bg-[#5D00D2] w-fit ${vuln.status.id === 3 && auth.user.id === vuln.tester?.id ? '' : "hidden"}`}>Confirm tested</a>
+
                                 </div>
                             }
                         </div>
@@ -111,7 +128,7 @@ export default function VulnDetails({auth, vuln}) {
                     </div>
 
                 </div>
-                <div className={'flex-col w-[80%] gap-8'}
+                <div className='flex-col w-[80%] gap-8'
                      style={tab === 'comments' ? {display: "flex"} : {display: 'none'}}>
                     {
                         vuln.comments.map((comment) =>
@@ -122,6 +139,12 @@ export default function VulnDetails({auth, vuln}) {
                         )
 
                     }
+                    <div className="flex flex-row">
+                        <input className="bg-[#727272] rounded-xl placeholder-white w-full" type="text" onChange={(event)=>setComment(event.target.value)}/>
+                        <button className="py-2 px-10 text-white rounded-xl bg-[#5D00D2] w-fit" onClick={()=>submitComment()}>Submit</button>
+
+
+                    </div>
                 </div>
 
             </div>

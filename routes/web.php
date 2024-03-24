@@ -37,7 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/vulns/create', [VulnerabilityController::class,'createTicket']);
 
     Route::get('/vulns/{id}',[VulnerabilityController::class,'details'])->name('vuln.details');
+    Route::post('vulns/{id}/postComment',[VulnerabilityController::class,'postComment']);
     Route::post('/vulns/{id}/changeStatus/{status_id}', [VulnerabilityController::class,'changeStatus']);
+
 
 });
 

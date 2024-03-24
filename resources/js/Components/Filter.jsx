@@ -59,6 +59,9 @@ export default function Filter() {
                         In progress
                     </option>
                     <option value={3}>
+                        Testing
+                    </option>
+                    <option value={4}>
                         Resolved
                     </option>
 
